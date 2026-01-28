@@ -195,6 +195,8 @@ interface LLMConfig {
 
 | テスト種別 | 対象 | ツール |
 |-----------|------|--------|
-| ユニットテスト | 各モジュール | Jest / pytest |
-| 統合テスト | API エンドポイント | Supertest / httpx |
-| E2Eテスト | ユーザーフロー | Playwright / Cypress |
+| ユニットテスト | 各モジュール | Jest + @testing-library/react |
+| 統合テスト | API エンドポイント | Jest + supertest |
+| E2Eテスト | ユーザーフロー | Playwright |
+
+詳細は [テスト仕様書](testing.md) を参照。

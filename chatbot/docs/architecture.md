@@ -108,8 +108,10 @@ chatbot/
 │       └── documents/
 ├── public/                     # 静的ファイル
 ├── tests/                      # テストコード
-│   ├── components/
-│   └── api/
+│   ├── unit/                  # ユニットテスト
+│   ├── integration/           # 統合テスト
+│   ├── e2e/                   # E2Eテスト
+│   └── acceptance/            # 受け入れテスト
 ├── .env.local                  # 環境変数（ローカル）
 ├── .env.example                # 環境変数テンプレート
 ├── .gitignore
