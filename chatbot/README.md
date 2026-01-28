@@ -94,6 +94,7 @@ npm run dev
 - [システム設計書](docs/design.md) - モジュール設計・データフロー
 - [アーキテクチャ設計書](docs/architecture.md) - 技術選定・ディレクトリ構成
 - [テスト仕様書](docs/testing.md) - テストケース・テスト計画
+- [開発計画書](docs/development-plan.md) - フェーズ別タスク・スケジュール
 
 ## ライセンス
 
