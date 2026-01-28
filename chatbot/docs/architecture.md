@@ -2,61 +2,67 @@
 
 ## アーキテクチャ概要
 
-本システムは、シンプルなクライアント・サーバーアーキテクチャを採用する。
-開発の容易さとデモのしやすさを重視し、モノリシックな構成とする。
+本システムは、Next.js + Vercelを採用したモダンなWebアプリケーション構成とする。
+Vercelへのデプロイにチャレンジし、本番環境での動作を目指す。
 
 ## 技術選定
 
-### 推奨構成（Streamlit版）
+### 推奨構成（Next.js + Vercel）
 
-最もシンプルで素早く開発可能な構成。
+Vercelの無料枠（Hobbyプラン）を活用し、本番デプロイまで行う構成。
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                     Vercel Platform                          │
+│  ┌───────────────────────────────────────────────────────┐  │
+│  │                   Next.js Application                  │  │
+│  │  ┌─────────────────┐    ┌─────────────────────────┐   │  │
+│  │  │  Frontend       │    │  API Routes              │   │  │
+│  │  │  ・React        │    │  ・/api/chat            │   │  │
+│  │  │  ・Tailwind CSS │    │  ・Gemini API連携       │   │  │
+│  │  │  ・Chat UI      │    │  ・RAG処理（オプション）│   │  │
+│  │  └─────────────────┘    └─────────────────────────┘   │  │
+│  └───────────────────────────────────────────────────────┘  │
+└─────────────────────────────────────────────────────────────┘
+                              │
+                              ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    External Services                         │
+│  ┌──────────────────────────────────────────────────┐      │
+│  │              Google Gemini API                     │      │
+│  └──────────────────────────────────────────────────┘      │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**技術スタック**:
+
+| レイヤー | 技術 | バージョン |
+|----------|------|-----------|
+| フレームワーク | Next.js (App Router) | 14.x |
+| 言語 | TypeScript | 5.x |
+| UI | React + Tailwind CSS | React 18.x |
+| LLM連携 | @google/generative-ai | 最新 |
+| デプロイ | Vercel (Hobby Plan) | - |
+
+**メリット**:
+- Vercelへのワンクリックデプロイ
+- 本番URLが即座に発行される
+- GitHub連携で自動デプロイ
+- Edge Functionsで高速レスポンス
+- 無料枠で十分な機能
+
+### 代替構成（Streamlit版）
+
+シンプルさを優先する場合の選択肢。
 
 ```
 ┌────────────────────────────────────────────┐
 │              Streamlit App                  │
-│  ┌──────────────────────────────────────┐  │
-│  │          Frontend (Auto-generated)    │  │
-│  ├──────────────────────────────────────┤  │
-│  │          Backend (Python)             │  │
-│  │  ・Chat Logic                         │  │
-│  │  ・Gemini API Integration             │  │
-│  │  ・RAG (LangChain)                    │  │
-│  └──────────────────────────────────────┘  │
+│  ・Frontend (Auto-generated)               │
+│  ・Backend (Python)                        │
+│  ・Streamlit Cloud でデプロイ可能          │
 └────────────────────────────────────────────┘
 ```
-
-**技術スタック**:
-| レイヤー | 技術 |
-|----------|------|
-| フレームワーク | Streamlit |
-| LLM連携 | LangChain + google-generativeai |
-| RAG | LangChain + ChromaDB |
-| 言語 | Python 3.11+ |
-
-**メリット**:
-- 最小限のコードで動作するUIが構築可能
-- Pythonのみで完結
-- RAG実装が容易（LangChain活用）
-
-### 代替構成（Next.js版）
-
-よりカスタマイズ性の高いUI が必要な場合。
-
-```
-┌──────────────────────┐    ┌──────────────────────┐
-│   Frontend (Next.js)  │───│   Backend (API)      │
-│  ・React Components   │    │  ・Next.js API Routes│
-│  ・Tailwind CSS       │    │  ・Gemini SDK        │
-└──────────────────────┘    └──────────────────────┘
-```
-
-**技術スタック**:
-| レイヤー | 技術 |
-|----------|------|
-| フレームワーク | Next.js 14 (App Router) |
-| UI | React + Tailwind CSS |
-| LLM連携 | @google/generative-ai |
-| デプロイ | Vercel |
 
 ### 代替構成（Dify版）
 
@@ -65,70 +71,52 @@
 ```
 ┌────────────────────────────────────────────┐
 │                 Dify Platform              │
-│  ┌──────────────────────────────────────┐  │
-│  │          Visual Workflow Builder      │  │
-│  │  ・Prompt Template                    │  │
-│  │  ・Knowledge Base (RAG)               │  │
-│  │  ・Model Configuration                │  │
-│  └──────────────────────────────────────┘  │
+│  ・Visual Workflow Builder                 │
+│  ・組み込みRAG機能                         │
+│  ・学生向け無料枠拡大可能                  │
 └────────────────────────────────────────────┘
 ```
 
-**メリット**:
-- コーディング不要
-- 学生向け無料枠拡大可能
-- 組み込みRAG機能
-
 ## ディレクトリ構成
 
-### Streamlit版
+### Next.js + Vercel版（推奨）
 
 ```
 chatbot/
-├── docs/                    # 設計ドキュメント
+├── docs/                       # 設計ドキュメント
 │   ├── requirements.md
 │   ├── design.md
-│   └── architecture.md
-├── src/                     # ソースコード
-│   ├── app.py              # メインアプリケーション
-│   ├── chat_service.py     # チャットロジック
-│   ├── llm_client.py       # Gemini API クライアント
-│   └── rag/                # RAG モジュール
-│       ├── __init__.py
-│       ├── document_loader.py
-│       ├── embeddings.py
-│       └── retriever.py
-├── data/                    # 知識ベースデータ
-│   └── documents/
-├── tests/                   # テストコード
-│   ├── test_chat_service.py
-│   └── test_llm_client.py
-├── .env.example            # 環境変数テンプレート
-├── requirements.txt        # Python依存関係
-└── README.md               # プロジェクト説明
-```
-
-### Next.js版
-
-```
-chatbot/
-├── docs/                    # 設計ドキュメント
+│   ├── architecture.md
+│   └── testing.md
 ├── src/
-│   ├── app/                # Next.js App Router
-│   │   ├── page.tsx       # メインページ
-│   │   ├── layout.tsx     # レイアウト
+│   ├── app/                    # Next.js App Router
+│   │   ├── page.tsx           # メインページ（チャットUI）
+│   │   ├── layout.tsx         # ルートレイアウト
+│   │   ├── globals.css        # グローバルスタイル
 │   │   └── api/
 │   │       └── chat/
-│   │           └── route.ts  # Chat API
-│   ├── components/         # Reactコンポーネント
-│   │   ├── ChatInput.tsx
-│   │   ├── ChatMessage.tsx
-│   │   └── ChatWindow.tsx
-│   └── lib/                # ユーティリティ
-│       └── gemini.ts      # Gemini クライアント
-├── .env.local             # 環境変数
+│   │           └── route.ts   # Chat API エンドポイント
+│   ├── components/             # Reactコンポーネント
+│   │   ├── ChatWindow.tsx     # チャットウィンドウ
+│   │   ├── ChatMessage.tsx    # メッセージ表示
+│   │   ├── ChatInput.tsx      # 入力フォーム
+│   │   └── LoadingSpinner.tsx # ローディング表示
+│   ├── lib/                    # ユーティリティ
+│   │   ├── gemini.ts          # Gemini APIクライアント
+│   │   └── types.ts           # 型定義
+│   └── data/                   # 知識ベース（RAG用）
+│       └── documents/
+├── public/                     # 静的ファイル
+├── tests/                      # テストコード
+│   ├── components/
+│   └── api/
+├── .env.local                  # 環境変数（ローカル）
+├── .env.example                # 環境変数テンプレート
+├── .gitignore
+├── next.config.js              # Next.js設定
+├── tailwind.config.js          # Tailwind設定
+├── tsconfig.json               # TypeScript設定
 ├── package.json
-├── tsconfig.json
 └── README.md
 ```
 
@@ -139,22 +127,55 @@ chatbot/
 ```
 ┌─────────────────────────────────────────┐
 │           Local Development              │
-│  ・ローカルサーバー (localhost:8501)    │
+│  ・localhost:3000                        │
 │  ・ホットリロード有効                    │
-│  ・.env ファイルで環境変数管理          │
+│  ・.env.local で環境変数管理            │
 └─────────────────────────────────────────┘
+
+セットアップ:
+$ npm install
+$ cp .env.example .env.local
+$ npm run dev
 ```
 
-### 本番環境（オプション）
+### 本番環境（Vercel）
 
 ```
 ┌─────────────────────────────────────────┐
-│          Vercel / Streamlit Cloud       │
-│  ・自動デプロイ (GitHub連携)            │
-│  ・環境変数は管理画面から設定           │
+│              Vercel Platform             │
+│  ・自動デプロイ (GitHub Push時)         │
+│  ・プレビューURL (PR作成時)             │
+│  ・本番URL: https://xxx.vercel.app      │
+│  ・環境変数はVercel管理画面で設定       │
 │  ・HTTPS自動対応                        │
+│  ・CDN配信                              │
 └─────────────────────────────────────────┘
+
+デプロイ手順:
+1. GitHubリポジトリをVercelに接続
+2. 環境変数(GEMINI_API_KEY)を設定
+3. デプロイ実行（自動）
 ```
+
+## Vercel デプロイ設定
+
+### vercel.json（オプション）
+
+```json
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "framework": "nextjs",
+  "regions": ["hnd1"]
+}
+```
+
+### 環境変数
+
+| 変数名 | 説明 | 設定場所 |
+|--------|------|---------|
+| `GEMINI_API_KEY` | Gemini API キー | Vercel管理画面 |
+| `NEXT_PUBLIC_APP_URL` | アプリURL（オプション） | Vercel管理画面 |
 
 ## 開発フロー
 
@@ -162,31 +183,33 @@ chatbot/
 
 ```
 Week 1:
-├── 環境構築
+├── Next.js プロジェクト初期化
+├── Tailwind CSS セットアップ
 ├── 基本チャットUI実装
-└── Gemini API連携
+├── Gemini API連携
+└── Vercel初回デプロイ
 ```
 
-**成果物**: テキスト入力に対してGemini APIが応答するシンプルなチャットボット
+**成果物**: Vercel上で動作するシンプルなチャットボット
 
-### Phase 2: 機能拡張（RAG実装）
+### Phase 2: 機能拡張
 
 ```
 Week 2:
-├── ドキュメントローダー実装
-├── Embedding設定
-├── Vector Store構築
-└── Retriever統合
+├── UI/UXの改善（レスポンシブ対応）
+├── ストリーミング応答の実装
+├── 会話履歴の保持
+└── RAG機能（オプション）
 ```
 
-**成果物**: 講座資料を参照して回答できるRAG機能付きチャットボット
+**成果物**: 講座資料を参照できるチャットボット
 
 ### Phase 3: 品質向上・デモ準備
 
 ```
 Week 3:
-├── UI/UXの改善
 ├── エラーハンドリング強化
+├── ローディング状態の改善
 ├── テスト実施
 └── 動画撮影
 ```
@@ -195,41 +218,63 @@ Week 3:
 
 ## 依存関係
 
-### Python (Streamlit版)
-
-```txt
-streamlit>=1.28.0
-langchain>=0.1.0
-langchain-google-genai>=0.0.6
-chromadb>=0.4.0
-python-dotenv>=1.0.0
-```
-
-### Node.js (Next.js版)
+### package.json
 
 ```json
 {
+  "name": "chatbot",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest"
+  },
   "dependencies": {
     "next": "^14.0.0",
     "react": "^18.2.0",
-    "@google/generative-ai": "^0.1.0"
+    "react-dom": "^18.2.0",
+    "@google/generative-ai": "^0.21.0",
+    "ai": "^3.0.0"
   },
   "devDependencies": {
     "typescript": "^5.0.0",
-    "tailwindcss": "^3.3.0"
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "jest": "^29.0.0",
+    "@testing-library/react": "^14.0.0"
   }
 }
 ```
 
 ## 判断基準とトレードオフ
 
-| 観点 | Streamlit | Next.js | Dify |
-|------|-----------|---------|------|
-| 開発速度 | 高 | 中 | 最高 |
-| カスタマイズ性 | 中 | 高 | 低 |
-| RAG実装容易性 | 高 | 中 | 最高 |
-| 学習コスト | 低 | 中 | 最低 |
-| デプロイ容易性 | 高 | 高 | 高 |
+| 観点 | Next.js + Vercel | Streamlit | Dify |
+|------|-----------------|-----------|------|
+| 開発速度 | 中 | 高 | 最高 |
+| カスタマイズ性 | **高** | 中 | 低 |
+| 本番デプロイ | **最高** | 中 | 高 |
+| UIの自由度 | **高** | 低 | 低 |
+| 学習価値 | **高** | 中 | 低 |
+| 無料枠 | **十分** | 制限あり | 申請必要 |
 
-**推奨**: 時間制約を考慮し、**Streamlit版**での開発を推奨する。
-RAG実装が必要な場合はLangChainとの親和性が高く、迅速に開発可能。
+**推奨**: **Next.js + Vercel**での開発を採用。
+- Vercelへのデプロイ経験が得られる
+- モダンなフロントエンド開発スキルが身につく
+- 本番URLをそのままデモに使用可能
+- 無料枠で十分に動作
+
+## 参考リンク
+
+- [Next.js ドキュメント](https://nextjs.org/docs)
+- [Vercel ドキュメント](https://vercel.com/docs)
+- [Gemini API ドキュメント](https://ai.google.dev/docs)
+- [Tailwind CSS](https://tailwindcss.com/docs)

@@ -5,7 +5,7 @@
 ## 概要
 
 Gemini APIを活用したWebベースのAIチャットボット。
-RAG（Retrieval-Augmented Generation）機能により、講座資料を参照した回答が可能。
+**Next.js + Vercel** で構築し、本番環境へのデプロイまで行う。
 
 ## プロジェクト構成
 
@@ -17,8 +17,10 @@ chatbot/
 │   ├── architecture.md     # アーキテクチャ設計書
 │   └── testing.md          # テスト仕様書
 ├── src/                     # ソースコード（実装時に作成）
+│   ├── app/                # Next.js App Router
+│   ├── components/         # Reactコンポーネント
+│   └── lib/                # ユーティリティ
 ├── tests/                   # テストコード（実装時に作成）
-├── data/                    # 知識ベースデータ（実装時に作成）
 └── README.md               # このファイル
 ```
 
@@ -27,15 +29,17 @@ chatbot/
 | カテゴリ | 技術 |
 |----------|------|
 | LLM API | Google Gemini API |
-| フレームワーク | Streamlit（推奨） |
-| RAG | LangChain + ChromaDB |
-| 言語 | Python 3.11+ |
+| フレームワーク | Next.js 14 (App Router) |
+| 言語 | TypeScript |
+| UI | React + Tailwind CSS |
+| デプロイ | **Vercel** (Hobby Plan) |
 
 ## クイックスタート
 
 ### 前提条件
 
-- Python 3.11以上
+- Node.js 18以上
+- npm または yarn
 - Gemini API キー
 
 ### セットアップ
@@ -45,34 +49,35 @@ chatbot/
 git clone <repository-url>
 cd chatbot
 
-# 仮想環境を作成
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# または
-.\venv\Scripts\activate   # Windows
-
 # 依存関係をインストール
-pip install -r requirements.txt
+npm install
 
 # 環境変数を設定
-cp .env.example .env
-# .envファイルを編集してGEMINI_API_KEYを設定
+cp .env.example .env.local
+# .env.local を編集して GEMINI_API_KEY を設定
 ```
 
-### 実行
+### ローカル実行
 
 ```bash
-streamlit run src/app.py
+npm run dev
 ```
 
-ブラウザで `http://localhost:8501` を開く。
+ブラウザで `http://localhost:3000` を開く。
+
+### Vercelへデプロイ
+
+1. [Vercel](https://vercel.com) にサインアップ
+2. GitHubリポジトリを接続
+3. 環境変数 `GEMINI_API_KEY` を設定
+4. デプロイ実行（自動）
 
 ## 開発スケジュール
 
 | フェーズ | 内容 | 期間 |
 |---------|------|------|
-| Phase 1 | MVP（基本チャット機能） | Week 1 |
-| Phase 2 | RAG機能実装 | Week 2 |
+| Phase 1 | MVP + Vercel初回デプロイ | Week 1 |
+| Phase 2 | 機能拡張・UI改善 | Week 2 |
 | Phase 3 | 品質向上・動画作成 | Week 3 |
 
 ## 提出要件
