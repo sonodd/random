@@ -14,8 +14,10 @@ chatbot/
 ├── docs/                    # 設計ドキュメント
 │   ├── requirements.md     # 要件定義書
 │   ├── design.md           # システム設計書
-│   └── architecture.md     # アーキテクチャ設計書
+│   ├── architecture.md     # アーキテクチャ設計書
+│   └── testing.md          # テスト仕様書
 ├── src/                     # ソースコード（実装時に作成）
+├── tests/                   # テストコード（実装時に作成）
 ├── data/                    # 知識ベースデータ（実装時に作成）
 └── README.md               # このファイル
 ```
@@ -86,6 +88,7 @@ streamlit run src/app.py
 - [要件定義書](docs/requirements.md) - 機能要件・非機能要件
 - [システム設計書](docs/design.md) - モジュール設計・データフロー
 - [アーキテクチャ設計書](docs/architecture.md) - 技術選定・ディレクトリ構成
+- [テスト仕様書](docs/testing.md) - テストケース・テスト計画
 
 ## ライセンス
 
