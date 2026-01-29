@@ -98,5 +98,13 @@ desktop.ini
 # セキュリティ・プライベート設定
 # ========================================
 .clinerules
+
+# Webスクレイピング関連
+utils/web_scraping/test_output/
+utils/web_scraping/test_page.html
+utils/web_scraping/downloaded_texts/
+downloaded_texts/
+=======
 *.local
 private/
+
