@@ -1,19 +1,69 @@
 # Random Code Repository
 
-このリポジトリには、様々な実験的なコードやスクリプトが含まれています。
+機能確認やテスト開発のための実験的なコードを集めたリポジトリです。
 
-## ディレクトリ構成
+## カテゴリ一覧
 
-- **openai_experiments/** - OpenAI APIとLangChainを使った実験
-- **data_analysis/** - データ分析関連のノートブックとデータセット
-  - **try_datascience_vs_R/** - R比較記事にあった統計モデルを使った分析の習作
-- **misc_experiments/** - その他の実験的なコード
-- **utils/** - ユーティリティスクリプト
-  - **web_scraping/** - Webスクレイピング関連のスクリプト
+| カテゴリ | 説明 | プロジェクト数 |
+|---------|------|---------------|
+| [ai-ml/](./ai-ml/) | AI・機械学習関連 | 1 |
+| [data-analysis/](./data-analysis/) | データ分析 | 1 |
+| [algorithms/](./algorithms/) | アルゴリズム・ロジック | 1 |
+| [web/](./web/) | Web関連（スクレイピング等） | 1 |
 
-## 主要なファイル
+## プロジェクト一覧
 
-- `openai_experiments/using_openai_api_and_langchain.ipynb` - OpenAI APIとLangChainを使用したテキスト分類と結果のグルーピング
-- `data_analysis/try_datascience_vs_R/try_datascience_vs_R.ipynb` - NBAデータを使用した統計分析
-- `misc_experiments/zundoko_trial.ipynb` - その他の実験
-- `utils/web_scraping/test2.py` - Beautiful Soupを使用したWebスクレイピングのサンプル
+| プロジェクト | 説明 | 状態 |
+|-------------|------|------|
+| [ai-ml/openai-langchain](./ai-ml/openai-langchain/) | OpenAI APIとLangChainでテキスト分類 | ✅ 動作確認済 |
+| [data-analysis/stats-r-comparison](./data-analysis/stats-r-comparison/) | NBAデータを使った統計分析（R比較） | ✅ 動作確認済 |
+| [algorithms/zundoko](./algorithms/zundoko/) | ズンドコキヨシ実験 | ✅ 動作確認済 |
+| [web/scraping](./web/scraping/) | BeautifulSoupでWebスクレイピング | ✅ 動作確認済 |
+
+## ディレクトリ構造
+
+```
+random/
+├── README.md
+├── LICENSE
+├── CONTRIBUTING.md
+├── .gitignore
+│
+├── ai-ml/                      # AI・機械学習
+│   └── openai-langchain/
+│
+├── data-analysis/              # データ分析
+│   └── stats-r-comparison/
+│
+├── algorithms/                 # アルゴリズム
+│   └── zundoko/
+│
+└── web/                        # Web関連
+    └── scraping/
+```
+
+## 使用技術
+
+- **言語**: Python
+- **AI/ML**: OpenAI API, LangChain
+- **データ処理**: pandas, collections
+- **Web**: requests, BeautifulSoup
+- **環境**: Jupyter Notebook, Google Colab
+
+## クイックスタート
+
+```bash
+# リポジトリをクローン
+git clone https://github.com/sonodd/random.git
+cd random
+
+# 各プロジェクトのREADMEを参照して環境構築
+```
+
+## コントリビューション
+
+新しいコードを追加する際は [CONTRIBUTING.md](./CONTRIBUTING.md) を参照してください。
+
+## ライセンス
+
+このプロジェクトは [MIT License](./LICENSE) の下で公開されています。
