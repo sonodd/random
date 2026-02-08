@@ -16,7 +16,6 @@ random/
 | プロジェクト | 説明 | 状態 |
 |-------------|------|------|
 | [url-summarizer](./python/url-summarizer/) | URLからページ内容をMarkdownに要約 | ✅ 動作可 |
-| [sonosei-crawler](./python/sonosei-crawler/) | listen.styleからテキストをダウンロード | ✅ 動作可 |
 | [word-counter](./python/word-counter/) | Webページの単語出現頻度をカウント | ✅ 動作可 |
 
 ## colab/ - Google Colab実行用
